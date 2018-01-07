@@ -124,14 +124,20 @@ public class EventInfoFragment extends Fragment implements IQLActionbarFragment,
                     mGoogleMap.setMyLocationEnabled(true);
                 }
                 String icsBuilding = mEventLoc.substring(mEventLoc.indexOf("at:") + 4, mEventLoc.length());
-                Building building = new BuildingManager(getContext()).getIcsBuilding(icsBuilding.substring(0, 4));
-                if (building != null) {
-                    LatLng pos = new LatLng(building.getLat(), building.getLon());
-                    mGoogleMap.addMarker(new MarkerOptions().position(pos).title(building.getName())).showInfoWindow();
+                try {
+                    Building building = new BuildingManager(getContext()).getIcsBuilding(icsBuilding.substring(0, 4));
+                    if (building != null) {
+                        LatLng pos = new LatLng(building.getLat(), building.getLon());
+                        mGoogleMap.addMarker(new MarkerOptions().position(pos).title(building.getName())).showInfoWindow();
 
-                    //For zooming automatically to the location of the marker
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(pos).zoom(16).build();
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                        //For zooming automatically to the location of the marker
+                        CameraPosition cameraPosition = new CameraPosition.Builder().target(pos).zoom(16).build();
+                        mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    }
+                }
+                catch(StringIndexOutOfBoundsException e){
+                    mGoogleMap.clear(); // clear the generated map, we no longer need it
+                    mMapView.setVisibility(View.GONE);  // hide the map and resize the card to encompass only the class data
                 }
             }
         });

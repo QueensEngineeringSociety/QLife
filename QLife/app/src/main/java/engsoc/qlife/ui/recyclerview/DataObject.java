@@ -8,6 +8,7 @@ public class DataObject {
     private String mText1;
     private String mText2;
     private String mText3;
+    private String mText4;
     private String mHeader;
     private int mId;
     private long mClassId;
@@ -47,6 +48,16 @@ public class DataObject {
         mHasName = hasName;
         mText3 = text3;
     }
+
+    public DataObject(String text1, String text2, long classId, boolean hasName, String classDescription, String classNum) {
+        mText1 = text1;
+        mText2 = text2;
+        mClassId = classId;
+        mHasName = hasName;
+        mText3 = classDescription;
+        mText4 = classNum;
+    }
+
 
     public DataObject(String text1, String text2, int id, boolean hasTV, String header, String Description, String text3) {
         mText1 = text1;
@@ -96,6 +107,10 @@ public class DataObject {
 
     public String getmText3() {
         return mText3;
+    }
+
+    public String getmText4() {
+        return mText4;
     }
 
     public void setmText2(String mText2) {

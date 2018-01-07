@@ -248,7 +248,8 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
                     amPMTime = (minHour) + ":" + minMin + "-" + (endHour - 12) + ":" + endMin + " PM";
                 else amPMTime = time.get(posSmall) + " AM";
 
-                mResult.add(new DataObject(list.get(posSmall), amPMTime + " at: " + loc.get(posSmall), classID.get(posSmall), hasName.get(posSmall), detailsList.get(posSmall)));
+                // This was changed so that the class title shows up within the class view, as that is probably more useful than just the course code for users.  The course code is now held in mText4
+                mResult.add(new DataObject(list.get(posSmall) + " - " + detailsList.get(posSmall), amPMTime + " at: " + loc.get(posSmall), classID.get(posSmall), hasName.get(posSmall), detailsList.get(posSmall), list.get(posSmall)));
                 list.remove(posSmall);
                 time.remove(posSmall);
                 loc.remove(posSmall);
@@ -259,8 +260,8 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
             }
         }
         if (list.size() > 0) {
-            mResult.add(new DataObject(list.get(0), time.get(0) + " at: " + loc.get(0) + " description: " + list.get(0),
-                    classID.get(posSmall), hasName.get(posSmall), detailsList.get(0)));
+            mResult.add(new DataObject(list.get(0) + " - " + detailsList.get(posSmall), time.get(0) + " at: " + loc.get(0) + " description: " + list.get(0),
+                    classID.get(posSmall), hasName.get(posSmall), detailsList.get(0), list.get(posSmall)));
         }
         return mResult;
     }
@@ -340,7 +341,7 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
                 String cardName = card.getTransitionName();
                 EventInfoFragment nextFrag = new EventInfoFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString(TAG_CODE, data.getmText1());
+                bundle.putString(TAG_CODE, data.getmText4());
                 bundle.putString(TAG_NAME, data.getmText3());
                 bundle.putString(TAG_LOC, data.getmText2());
                 bundle.putString(TAG_DATE, mDateString);
