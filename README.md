@@ -14,6 +14,8 @@ suggestions to improve the app. There is also a privacy policy hosted here per G
 
 A cloud database is hosted with the Queen's Engineering Society's cloud system and made accessible by a public load balancer. A php script, get\_database.php, is used to retrive the database in JSON form. On login, the app makes an HTTP get call to qtap.engsoc.queensu.ca/database/get\_database.php to retrieve that JSON and then parse it and put into the phone's SQLITE database.
 
+The cloud database also has a Dibs table. This holds the JSON array returned from the Dibs reservations API for each room. This table is automatically updated every 10 minutes.
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
