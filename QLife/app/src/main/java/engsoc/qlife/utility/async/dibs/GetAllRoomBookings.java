@@ -1,17 +1,13 @@
-package engsoc.qlife.database.dibs;
+package engsoc.qlife.utility.async.dibs;
 
 import android.util.Log;
 import android.util.SparseArray;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import engsoc.qlife.database.local.DatabaseRow;
 import engsoc.qlife.database.local.rooms.Room;
-import engsoc.qlife.interfaces.AsyncTaskObserver;
-import engsoc.qlife.ui.fragments.RoomsFragment;
+import engsoc.qlife.interfaces.observers.AsyncTaskObserver;
 import engsoc.qlife.utility.Constants;
 import engsoc.qlife.utility.async.DownloadTextTask;
 
@@ -38,13 +34,8 @@ public class GetAllRoomBookings extends DownloadTextTask<Integer, SparseArray<St
         for (DatabaseRow row : mRoomData) {
             Room room = (Room) row;
             try {
-                int day = values[RoomsFragment.DAY_POS];
-                int month = values[RoomsFragment.MONTH_POS];
-                int year = values[RoomsFragment.YEAR_POS];
-
                 //call php script on server that gets info from cloud database
-                roomAvailability.put((int) room.getId(), getText(Constants.GET_ROOM_BOOKINGS + year + "-" +
-                        (month + 1) + "-" + day + "/" + room.getId()));
+                roomAvailability.put((int) room.getId(), getText(Constants.GET_ROOM_BOOKINGS + "room=" + room.getId()));
             } catch (Exception e) {
                 Log.d("HELLOTHERE", "BAD: " + e);
             }

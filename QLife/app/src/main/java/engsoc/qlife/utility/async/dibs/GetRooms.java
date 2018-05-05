@@ -1,11 +1,10 @@
-package engsoc.qlife.database.dibs;
+package engsoc.qlife.utility.async.dibs;
 
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
-import engsoc.qlife.interfaces.AsyncTaskObserver;
+import engsoc.qlife.interfaces.observers.AsyncTaskObserver;
 import engsoc.qlife.utility.Constants;
 import engsoc.qlife.utility.async.DownloadTextTask;
 
@@ -22,10 +21,12 @@ public class GetRooms extends DownloadTextTask<Void, Void> {
     @Override
     protected Void backgroundTask(Void val) {
         try {
-            //call php script on server that gets info from cloud database
             String jsonStr = getText(Constants.GET_DIBS_ROOMS);
-            mObserver.duringTask(new JSONArray(jsonStr));
-        } catch (JSONException e) {
+            if (mObserver != null)
+                mObserver.duringTask(new JSONArray(jsonStr));
+        } catch (Exception e) {
+            //must catch JSONException, this will catch exception from
+            //null jsonStr when trying to make a JSONArray
             Log.d("HELLOTHERE", "BAD: " + e);
         }
         return null;
