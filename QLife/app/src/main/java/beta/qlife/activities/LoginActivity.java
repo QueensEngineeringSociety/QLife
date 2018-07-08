@@ -140,10 +140,9 @@ public class LoginActivity extends AppCompatActivity {
         } else {        // if the user has logged in before, see if the schedule is up to date
             User userData = (User) mUserManager.getTable().get(0);
             String date = userData.getDateInit();
-            if (mIcsUrl == "")
+            if ("".equals(mIcsUrl))
                 mIcsUrl = userData.getIcsURL(); // get the URL from the DB so that we can re-download the schedule and info if we need to
 
-//            mIcsUrl = "https://raw.githubusercontent.com/ruffoa/QLife/master/testCal.ics"; // ToDo: Remove this temporary link
             if (!date.isEmpty()) {
                 //if downloaded calendar, but older than a week, re-download
                 Calendar lastWeek = Calendar.getInstance();
@@ -156,10 +155,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (lastDownloaded.before(lastWeek)) {
                         getIcsFile();
                     }
-//                    else    // ToDo: DELETE ME!! THIS IS JUST FOR DEBUGGING PURPOSES!!!
-//                    {
-//                        getIcsFile();
-//                    }
                 } catch (Exception e) {
                     Log.d("HELLOTHERE", e.getMessage());
 

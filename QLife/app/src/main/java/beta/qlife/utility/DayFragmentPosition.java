@@ -23,7 +23,6 @@ public class DayFragmentPosition {
             @Override
             public void onHomePressed() {
                 mArray.put(mInstances, 0);
-                Log.d("HELLOTHERE", "SDF");
             }
 
             @Override
