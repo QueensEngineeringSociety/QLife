@@ -18,6 +18,7 @@
     <string name="fragment_student_tools">Student Tools</string>
     <string name="fragment_emerg_contacts">Emergency Contacts</string>
     <string name="fragment_eng_contacts">Engineering Contacts</string>
+    <string name="fragment_qrcode">QR Code</string>
     <string name="fragment_ilc_rooms">ILC Rooms</string>
 
     <!--Short text in app-->
@@ -79,6 +80,7 @@
     <string name="schedule_section">Schedule</string>
     <string name="campus_section">Campus</string>
     <string name="information_section">Information</string>
+    <string name="qrcode">QR Code</string>
 
     <!--URLs-->
     <string name="onq_url">http://onq.queensu.ca/</string>

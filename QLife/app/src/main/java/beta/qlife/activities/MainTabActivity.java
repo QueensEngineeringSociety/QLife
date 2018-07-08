@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import beta.qlife.R;
+import beta.qlife.ui.fragments.QrCodeFragment;
 import beta.qlife.ui.fragments.RoomsFragment;
 import beta.qlife.utility.Util;
 import beta.qlife.database.local.DatabaseAccessor;
@@ -147,7 +148,9 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
             case R.id.nav_rooms:
                 fragment = new RoomsFragment();
                 break;
-
+            case R.id.nav_qr:
+                fragment = new QrCodeFragment();
+                break;
         }
 
         if (fragment != null) {

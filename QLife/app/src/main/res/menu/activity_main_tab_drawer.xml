@@ -9,11 +9,11 @@
                 <item
                     android:id="@+id/nav_day"
                     android:icon="@mipmap/ic_today"
-                    android:title="@string/fragment_day"/>
+                    android:title="@string/fragment_day" />
                 <item
                     android:id="@+id/nav_month"
                     android:icon="@mipmap/ic_calendar"
-                    android:title="@string/fragment_month"/>
+                    android:title="@string/fragment_month" />
             </menu>
         </item>
         <item android:title="@string/campus_section">
@@ -21,23 +21,23 @@
                 <item
                     android:id="@+id/nav_map"
                     android:icon="@mipmap/ic_map"
-                    android:title="@string/activity_maps"/>
+                    android:title="@string/activity_maps" />
                 <item
                     android:id="@+id/nav_buildings"
                     android:icon="@mipmap/ic_building"
-                    android:title="@string/fragment_buildings"/>
+                    android:title="@string/fragment_buildings" />
                 <item
                     android:id="@+id/nav_cafeterias"
                     android:icon="@mipmap/ic_restaurant"
-                    android:title="@string/fragment_cafeterias"/>
+                    android:title="@string/fragment_cafeterias" />
                 <item
                     android:id="@+id/nav_food"
                     android:icon="@mipmap/ic_food"
-                    android:title="@string/food"/>
+                    android:title="@string/food" />
                 <item
                     android:id="@+id/nav_rooms"
                     android:icon="@mipmap/ic_booking"
-                    android:title="@string/fragment_ilc_rooms"/>
+                    android:title="@string/fragment_ilc_rooms" />
 
             </menu>
         </item>
@@ -46,7 +46,11 @@
                 <item
                     android:id="@+id/nav_tools"
                     android:icon="@mipmap/ic_tools"
-                    android:title="@string/fragment_student_tools"/>
+                    android:title="@string/fragment_student_tools" />
+                <item
+                    android:id="@+id/nav_qr"
+                    android:icon="@mipmap/qrcode"
+                    android:title="@string/qrcode" />
             </menu>
         </item>
     </group>
