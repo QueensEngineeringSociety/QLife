@@ -27,7 +27,7 @@ public class SqlStringStatements {
     static final String CREATE_USERS = "CREATE TABLE " + User.TABLE_NAME + "(" +
             User.ID + " INTEGER PRIMARY KEY," + User.COLUMN_NETID + " TEXT," +
             User.COLUMN_FIRST_NAME + " TEXT," + User.COLUMN_LAST_NAME + " TEXT," +
-            User.COLUMN_DATE_INIT + " TEXT," + User.COLUMN_ICS_URL + " TEXT);";
+            User.COLUMN_DATE_INIT + " TEXT," + User.COLUMN_ICS_URL + " TEXT," + User.COLUMN_STUDENT_NUMBER + " INTEGER);";
 
     static final String CREATE_CLASSES = "CREATE TABLE " + OneClass.TABLE_NAME + "(" +
             OneClass.ID + " INTEGER PRIMARY KEY," + OneClass.COLUMN_CLASS_TYPE + " TEXT," +

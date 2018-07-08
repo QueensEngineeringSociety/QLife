@@ -29,6 +29,7 @@ public class UserManager extends DatabaseManager {
             values.put(User.COLUMN_LAST_NAME, user.getLastName());
             values.put(User.COLUMN_DATE_INIT, user.getDateInit());
             values.put(User.COLUMN_ICS_URL, user.getIcsURL());
+            values.put(User.COLUMN_STUDENT_NUMBER, user.getStudentNumber());
             getDatabase().insert(User.TABLE_NAME, null, values);
         }
     }
@@ -52,7 +53,7 @@ public class UserManager extends DatabaseManager {
             User user = null;
             if (cursor != null && cursor.moveToNext()) {
                 user = new User(cursor.getInt(User.ID_POS), cursor.getString(User.NETID_POS), cursor.getString(User.FIRST_NAME_POS),
-                        cursor.getString(User.LAST_NAME_POS), cursor.getString(User.DATE_INIT_POS), cursor.getString(User.ICS_URL_POS));
+                        cursor.getString(User.LAST_NAME_POS), cursor.getString(User.DATE_INIT_POS), cursor.getString(User.ICS_URL_POS), cursor.getInt(User.STUDENT_NUM_POS));
                 cursor.close();
             }
             return user;
@@ -66,12 +67,11 @@ public class UserManager extends DatabaseManager {
         try (Cursor cursor = getDatabase().query(User.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
             User user = new User(cursor.getInt(User.ID_POS), cursor.getString(User.NETID_POS), cursor.getString(User.FIRST_NAME_POS),
-                    cursor.getString(User.LAST_NAME_POS), cursor.getString(User.DATE_INIT_POS), cursor.getString(User.ICS_URL_POS));
+                    cursor.getString(User.LAST_NAME_POS), cursor.getString(User.DATE_INIT_POS), cursor.getString(User.ICS_URL_POS), cursor.getInt(User.STUDENT_NUM_POS));
             cursor.close();
             return user; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
         }
-
     }
 
     @Override
@@ -84,6 +84,7 @@ public class UserManager extends DatabaseManager {
             values.put(User.COLUMN_LAST_NAME, newUser.getLastName());
             values.put(User.COLUMN_DATE_INIT, newUser.getDateInit());
             values.put(User.COLUMN_ICS_URL, newUser.getIcsURL());
+            values.put(User.COLUMN_STUDENT_NUMBER, newUser.getStudentNumber());
 
             String selection = User.ID + " LIKE ?";
             String selectionArgs[] = {String.valueOf(rowId)};

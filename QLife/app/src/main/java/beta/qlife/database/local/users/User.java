@@ -15,6 +15,7 @@ public class User extends DatabaseRow {
     public static final String COLUMN_LAST_NAME = "lastName";
     public static final String COLUMN_DATE_INIT = "dateInit";
     public static final String COLUMN_ICS_URL = "icsURL";
+    public static final String COLUMN_STUDENT_NUMBER = "studentNumber";
 
     //column number each field ends up in
     public static final int NETID_POS = 1;
@@ -22,6 +23,7 @@ public class User extends DatabaseRow {
     public static final int LAST_NAME_POS = 3;
     public static final int DATE_INIT_POS = 4;
     public static final int ICS_URL_POS = 5;
+    public static final int STUDENT_NUM_POS = 6;
 
     //fields in database
     private String netid;
@@ -29,6 +31,7 @@ public class User extends DatabaseRow {
     private String lastName;
     private String dateInit;
     private String icsURL;
+    private int studentNum = -1;
 
     public User(int id, String netid, String firstName, String lastName, String dateInit, String icsURL) {
         super(id);
@@ -37,6 +40,16 @@ public class User extends DatabaseRow {
         this.lastName = lastName;
         this.dateInit = dateInit;
         this.icsURL = icsURL;
+    }
+
+    public User(int id, String netid, String firstName, String lastName, String dateInit, String icsURL, int studentNum) {
+        super(id);
+        this.netid = netid;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateInit = dateInit;
+        this.icsURL = icsURL;
+        this.studentNum = studentNum;
     }
 
     public String getNetid() {
@@ -57,5 +70,13 @@ public class User extends DatabaseRow {
 
     public String getIcsURL() {
         return icsURL;
+    }
+
+    public void setStudentNumber(int number) {
+        studentNum = number;
+    }
+
+    public int getStudentNumber() {
+        return studentNum;
     }
 }
