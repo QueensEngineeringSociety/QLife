@@ -49,7 +49,7 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
         context = getActivity();
         setActionbarTitle();
         initNumber();
-        initButton();
+        initButtons();
         if (userNeverSetNumber()) {
             buildDialog().show();
         } else {
@@ -100,18 +100,33 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
         generateQrCode();
     }
 
-    private void notifyBadInput(){
+    private void notifyBadInput() {
         Toast.makeText(context, "You entered an invalid student number", Toast.LENGTH_SHORT).show();
     }
 
-    private void initButton() {
-        Button button = view.findViewById(R.id.enter_number);
-        button.setOnClickListener(new View.OnClickListener() {
+    private void initButtons() {
+        Button enterNumber = view.findViewById(R.id.enter_number);
+        enterNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 buildDialog().show();
             }
         });
+        Button clearNumber = view.findViewById(R.id.clear_number);
+        clearNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearStudentNumber();
+            }
+        });
+    }
+
+    private void clearStudentNumber() {
+        curStudentNumber = -1;
+        user.setStudentNumber(curStudentNumber);
+        userManager.updateRow(user.getId(), user);
+        ImageView qrImage = view.findViewById(R.id.qrcode_pic);
+        qrImage.setImageBitmap(null);
     }
 
     private void generateQrCode() {

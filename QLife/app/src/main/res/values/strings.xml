@@ -76,6 +76,7 @@
     <string name="suggestions">Give suggestions</string>
     <string name="title_class">Class</string>
     <string name="enter_number">Re-enter student number</string>
+    <string name="clear_number">Clear student number</string>
 
     <!--sections in drawer-->
     <string name="schedule_section">Schedule</string>

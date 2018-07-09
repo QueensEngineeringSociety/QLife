@@ -26,4 +26,12 @@
         android:layout_gravity="center"
         android:text="@string/enter_number" />
 
+    <Button
+        android:id="@+id/clear_number"
+        style="@style/MainButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/clear_number" />
+
 </LinearLayout>
