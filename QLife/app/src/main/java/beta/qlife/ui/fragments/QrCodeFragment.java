@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.zxing.BarcodeFormat;
@@ -47,10 +48,12 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
         if (userNotSet(curStudentNumber)) {
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
             alertBuilder.setTitle("Enter your student number");
+            final EditText input = new EditText(context);
+            alertBuilder.setView(input);
             alertBuilder.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    curStudentNumber = 5;
+                    curStudentNumber = Integer.parseInt(input.getText().toString()); //used in QR generation to avoid race condition with database, and extra accesses
                     user.setStudentNumber(curStudentNumber);
                     mUserManager.updateRow(user.getId(), user);
                     generateQrCode();
