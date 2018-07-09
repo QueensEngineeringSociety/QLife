@@ -56,6 +56,7 @@ public class StartupActivity extends AppCompatActivity {
                 R.layout.initial_slide_campus,
                 R.layout.initial_slide_cloud,
                 R.layout.initial_slide_rooms,
+                R.layout.initial_slide_qr,
                 R.layout.initial_slide_it_team
         };
         setViews();

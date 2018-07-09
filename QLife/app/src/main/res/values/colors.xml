@@ -14,6 +14,7 @@
     <color name="bg_screen4">#3395ff</color>
     <color name="bg_screen3">#d3b8e1</color>
     <color name="bg_screen5">#ff9933</color>
+    <color name="bg_screen7">#ff00ff</color>
 
     <!-- dots inactive colors -->
     <color name="dot_dark_screen_team">#4527a0</color>
@@ -22,6 +23,7 @@
     <color name="dot_dark_screen_cloud">#2278d4</color>
     <color name="dot_dark_screen_campus">#a11919</color>
     <color name="dot_dark_screen_rooms">#ff8000</color>
+    <color name="dot_dark_screen_qr">#b300b3</color>
 
     <!-- dots active colors -->
     <color name="dot_light_screen_welcome">#b39ddb</color>
@@ -30,6 +32,7 @@
     <color name="dot_light_screen_cloud">#93c6fd</color>
     <color name="dot_light_screen_campus">#f98da5</color>
     <color name="dot_light_screen_rooms">#ffb366</color>
+    <color name="dot_light_screen_qr">#ff33ff</color>
 
     <array name="array_dot_active">
         <item>@color/dot_light_screen_welcome</item>
@@ -37,6 +40,7 @@
         <item>@color/dot_light_screen_campus</item>
         <item>@color/dot_light_screen_cloud</item>
         <item>@color/dot_light_screen_rooms</item>
+        <item>@color/dot_light_screen_qr</item>
         <item>@color/dot_light_screen_team</item>
     </array>
 
@@ -46,6 +50,7 @@
         <item>@color/dot_dark_screen_campus</item>
         <item>@color/dot_dark_screen_cloud</item>
         <item>@color/dot_dark_screen_rooms</item>
+        <item>@color/dot_dark_screen_qr</item>
         <item>@color/dot_dark_screen_team</item>
     </array>
 </resources>

@@ -9,11 +9,8 @@
 
         <ImageView
             android:id="@+id/info_pic"
-            android:layout_width="@dimen/img_width_height"
-            android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/ic_info_black_24dp"
-            android:scaleType="fitXY"
-            android:tint="@color/white" />
+            style="@style/WelcomeSlideImage"
+            android:src="@drawable/ic_info_black_24dp" />
 
         <TextView
             android:id="@+id/campus_title"

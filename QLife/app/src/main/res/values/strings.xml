@@ -123,6 +123,8 @@
     <string name="slide_food_text">Easily pay with QLife at any roomNum on campus</string>
     <string name="slide_rooms_title">ILC Rooms</string>
     <string name="slide_rooms_text">Find information on rooms and see which are currently available! (You will need internet for this)</string>
+    <string name="slide_qr_title">Create a scan-able student number</string>
+    <string name="slide_qr_text">Enter your student number on the QR Code page, and a QR code is made of your number. No more needing your student card to get into the gym!</string>
 
     <!--paragraphs in app-->
     <string name="about_app">Welcome to QLife, thanks for downloading!\n\n

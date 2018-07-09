@@ -9,11 +9,8 @@
 
         <ImageView
             android:id="@+id/cloud_pic"
-            android:layout_width="@dimen/img_width_height"
-            android:layout_height="@dimen/img_width_height"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_cloud_outline"
-            android:tint="@color/white" />
+            style="@style/WelcomeSlideImage"
+            android:src="@drawable/ic_cloud_outline" />
 
         <TextView
             android:id="@+id/cloud_title"
