@@ -52,7 +52,7 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
                 public void onClick(DialogInterface dialogInterface, int i) {
                     curStudentNumber = 5;
                     user.setStudentNumber(curStudentNumber);
-                    mUserManager.updateRow(0, user);
+                    mUserManager.updateRow(user.getId(), user);
                     generateQrCode();
                 }
             });
