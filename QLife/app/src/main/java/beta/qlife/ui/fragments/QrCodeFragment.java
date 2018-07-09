@@ -35,6 +35,7 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
 
     private int curStudentNumber = -1;
     private View view;
+    AlertDialog.Builder alertDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -46,11 +47,11 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
         final User user = (User) users.get(0); //only ever one user in database
         curStudentNumber = user.getStudentNumber();
         if (userNotSet(curStudentNumber)) {
-            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-            alertBuilder.setTitle("Enter your student number");
+            alertDialog = new AlertDialog.Builder(context);
+            alertDialog.setTitle("Enter your student number");
             final EditText input = new EditText(context);
-            alertBuilder.setView(input);
-            alertBuilder.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+            alertDialog.setView(input);
+            alertDialog.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     curStudentNumber = Integer.parseInt(input.getText().toString()); //used in QR generation to avoid race condition with database, and extra accesses
@@ -59,13 +60,13 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
                     generateQrCode();
                 }
             });
-            alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.cancel();
                 }
             });
-            alertBuilder.show();
+            alertDialog.show();
         } else {
             generateQrCode();
         }
