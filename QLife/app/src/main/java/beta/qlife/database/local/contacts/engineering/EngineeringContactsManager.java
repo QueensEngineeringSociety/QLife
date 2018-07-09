@@ -34,7 +34,7 @@ public class EngineeringContactsManager extends DatabaseManager {
 
     @Override
     public ArrayList<DatabaseRow> getTable() {
-        return retrieveTable(EngineeringContact.TABLE_NAME, EngineeringContact.COLUMN_NAME);
+        return retrieveTable(EngineeringContact.TABLE_NAME, EngineeringContact.ID);
     }
 
     @Override

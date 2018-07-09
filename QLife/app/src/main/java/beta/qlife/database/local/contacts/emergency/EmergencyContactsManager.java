@@ -34,7 +34,7 @@ public class EmergencyContactsManager extends DatabaseManager {
 
     @Override
     public ArrayList<DatabaseRow> getTable() {
-        return retrieveTable(EmergencyContact.TABLE_NAME, EmergencyContact.COLUMN_NAME);
+        return retrieveTable(EmergencyContact.TABLE_NAME, EmergencyContact.ID);
     }
 
     @Override
