@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -46,26 +47,33 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
         ArrayList<DatabaseRow> users = mUserManager.getTable();
         final User user = (User) users.get(0); //only ever one user in database
         curStudentNumber = user.getStudentNumber();
+        alertDialog = new AlertDialog.Builder(context);
+        alertDialog.setTitle("Enter your student number");
+        final EditText input = new EditText(context);
+        alertDialog.setView(input);
+        alertDialog.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                curStudentNumber = Integer.parseInt(input.getText().toString()); //used in QR generation to avoid race condition with database, and extra accesses
+                user.setStudentNumber(curStudentNumber);
+                mUserManager.updateRow(user.getId(), user);
+                generateQrCode();
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        Button button = view.findViewById(R.id.enter_number);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.show();
+            }
+        });
         if (userNotSet(curStudentNumber)) {
-            alertDialog = new AlertDialog.Builder(context);
-            alertDialog.setTitle("Enter your student number");
-            final EditText input = new EditText(context);
-            alertDialog.setView(input);
-            alertDialog.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    curStudentNumber = Integer.parseInt(input.getText().toString()); //used in QR generation to avoid race condition with database, and extra accesses
-                    user.setStudentNumber(curStudentNumber);
-                    mUserManager.updateRow(user.getId(), user);
-                    generateQrCode();
-                }
-            });
-            alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                }
-            });
             alertDialog.show();
         } else {
             generateQrCode();
