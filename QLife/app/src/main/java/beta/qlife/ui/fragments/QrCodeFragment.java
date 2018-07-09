@@ -178,11 +178,11 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
 
     @Override
     public void deselectDrawer() {
-        Util.setDrawerItemSelected(getActivity(), R.id.nav_tools, false);
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_qr, false);
     }
 
     @Override
     public void selectDrawer() {
-        Util.setDrawerItemSelected(getActivity(), R.id.nav_tools, true);
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_qr, true);
     }
 }
