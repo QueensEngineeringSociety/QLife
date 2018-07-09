@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -34,30 +35,45 @@ import beta.qlife.utility.Util;
 
 public class QrCodeFragment extends Fragment implements ActionbarFragment, DrawerItem {
 
-    private int curStudentNumber = -1;
+    private int curStudentNumber = -1; //used in QR generation to avoid race condition with database, and extra accesses
+    private static final int STUDENT_NUMBER_LENGTH = 8;
+
     private View view;
-    AlertDialog.Builder alertDialog;
+    private Context context;
+    private User user;
+    private UserManager userManager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_qrcode, container, false);
+        context = getActivity();
         setActionbarTitle();
-        Context context = getActivity();
-        final UserManager mUserManager = new UserManager(context);
-        ArrayList<DatabaseRow> users = mUserManager.getTable();
-        final User user = (User) users.get(0); //only ever one user in database
+        initNumber();
+        initButton();
+        if (userNeverSetNumber()) {
+            buildDialog().show();
+        } else {
+            generateQrCode();
+        }
+        return view;
+    }
+
+    private void initNumber() {
+        userManager = new UserManager(context);
+        ArrayList<DatabaseRow> users = userManager.getTable();
+        user = (User) users.get(0); //only ever one user in database
         curStudentNumber = user.getStudentNumber();
-        alertDialog = new AlertDialog.Builder(context);
+    }
+
+    private AlertDialog.Builder buildDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("Enter your student number");
         final EditText input = new EditText(context);
         alertDialog.setView(input);
         alertDialog.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                curStudentNumber = Integer.parseInt(input.getText().toString()); //used in QR generation to avoid race condition with database, and extra accesses
-                user.setStudentNumber(curStudentNumber);
-                mUserManager.updateRow(user.getId(), user);
-                generateQrCode();
+                validateNumberInput(input.getText().toString());
             }
         });
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -66,19 +82,36 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
                 dialogInterface.cancel();
             }
         });
+        return alertDialog;
+    }
+
+    private void validateNumberInput(String input) {
+        if (isGoodStudentNumberInput(input)) {
+            useNumberInput(Integer.parseInt(input));
+        } else {
+            notifyBadInput();
+        }
+    }
+
+    private void useNumberInput(int number) {
+        curStudentNumber = number;
+        user.setStudentNumber(curStudentNumber);
+        userManager.updateRow(user.getId(), user);
+        generateQrCode();
+    }
+
+    private void notifyBadInput(){
+        Toast.makeText(context, "You entered an invalid student number", Toast.LENGTH_SHORT).show();
+    }
+
+    private void initButton() {
         Button button = view.findViewById(R.id.enter_number);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.show();
+                buildDialog().show();
             }
         });
-        if (userNotSet(curStudentNumber)) {
-            alertDialog.show();
-        } else {
-            generateQrCode();
-        }
-        return view;
     }
 
     private void generateQrCode() {
@@ -98,8 +131,17 @@ public class QrCodeFragment extends Fragment implements ActionbarFragment, Drawe
         }
     }
 
-    private boolean userNotSet(int studentNum) {
-        return studentNum == -1;
+    private boolean isGoodStudentNumberInput(String numberInput) {
+        try {
+            int temp = Integer.parseInt(numberInput);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return numberInput.length() == STUDENT_NUMBER_LENGTH;
+    }
+
+    private boolean userNeverSetNumber() {
+        return curStudentNumber == -1;
     }
 
     @Override
