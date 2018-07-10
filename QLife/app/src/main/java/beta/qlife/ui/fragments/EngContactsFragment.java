@@ -4,12 +4,16 @@ package beta.qlife.ui.fragments;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,11 +36,14 @@ import beta.qlife.utility.comparing.DbTableComparator;
  */
 public class EngContactsFragment extends android.support.v4.app.ListFragment implements ActionbarFragment, DrawerItem, ListFragment, SearchableFragment {
 
+    private ArrayList<DatabaseRow> contacts;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         setActionbarTitle();
         setSearchVisible(true);
+        setSearchFunction();
         inflateListView();
         return v;
     }
@@ -75,6 +82,7 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
         if (activity != null) {
             ArrayList<HashMap<String, String>> engContactsList = new ArrayList<>();
             ArrayList<DatabaseRow> contacts = (new EngineeringContactsManager(activity.getApplicationContext())).getTable();
+            this.contacts = contacts;
             for (DatabaseRow row : contacts) {
                 engContactsList.add(packEngContactsMap(row));
             }
@@ -104,5 +112,44 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
     @Override
     public void setSearchVisible(boolean isVisible) {
         Util.setSearchVisible((MainTabActivity) getActivity(), isVisible);
+    }
+
+    private void setSearchFunction() {
+        MainTabActivity myActivity = (MainTabActivity) getActivity();
+        if (myActivity != null) {
+            Menu menu = myActivity.getOptionsMenu();
+            if (menu != null) {
+                final MenuItem searchItem = menu.findItem(R.id.action_search);
+                final SearchView searchView = (SearchView) searchItem.getActionView();
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        DbTableComparator comp = new DbTableComparator(query, contacts);
+                        contacts=comp.tableByProximity();
+                        FragmentActivity activity = getActivity();
+                        if (activity != null) {
+                            ArrayList<HashMap<String, String>> engContactsList = new ArrayList<>();
+                            for (DatabaseRow row : contacts) {
+                                engContactsList.add(packEngContactsMap(row));
+                            }
+                            ListAdapter adapter = new SimpleAdapter(activity.getApplicationContext(), engContactsList,
+                                    R.layout.eng_contacts_list_item, new String[]{EngineeringContact.COLUMN_NAME, EngineeringContact.COLUMN_EMAIL,
+                                    EngineeringContact.COLUMN_POSITION, EngineeringContact.COLUMN_DESCRIPTION}, new int[]{R.id.name, R.id.email, R.id.position, R.id.description});
+                            setListAdapter(adapter);
+                        }
+                        if (!searchView.isIconified()) {
+                            searchView.setIconified(true);
+                        }
+                        searchItem.collapseActionView();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        return false;
+                    }
+                });
+            }
+        }
     }
 }
