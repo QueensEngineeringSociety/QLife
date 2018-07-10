@@ -28,4 +28,12 @@ public abstract class DatabaseRow {
     protected String boolFieldToString(boolean field) {
         return field ? "Can " : "Cannot ";
     }
+
+    protected String truncateEmailField(String email) {
+        int i = email.indexOf('@');
+        if (i < 0) {
+            return email;
+        }
+        return email.substring(0, i);
+    }
 }

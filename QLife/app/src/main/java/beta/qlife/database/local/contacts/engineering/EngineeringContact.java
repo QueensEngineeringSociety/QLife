@@ -53,6 +53,7 @@ public class EngineeringContact extends DatabaseRow {
         fields.add(name);
         fields.add(position);
         fields.add(description);
+        fields.add(truncateEmailField(email));
         return fields;
     }
 }

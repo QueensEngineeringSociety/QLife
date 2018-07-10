@@ -71,7 +71,6 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
         if (activity != null) {
             ArrayList<HashMap<String, String>> engContactsList = new ArrayList<>();
             ArrayList<DatabaseRow> contacts = (new EngineeringContactsManager(activity.getApplicationContext())).getTable();
-            DbTableComparator comp = new DbTableComparator("conferences", contacts);
             for (DatabaseRow row : contacts) {
                 engContactsList.add(packEngContactsMap(row));
             }

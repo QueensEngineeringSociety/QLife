@@ -4,16 +4,11 @@ import java.util.ArrayList;
 
 import beta.qlife.database.local.DatabaseRow;
 
-public class DbRowComparator {
-    private int proximity;
-
+class DbRowComparator extends Comparator {
     DbRowComparator(String search, DatabaseRow row) {
+        search = search.toLowerCase();
         ArrayList<String> fieldsAsStrings = row.publicFieldsAsStringList();
         StringListComparator stringListComparator = new StringListComparator(search, fieldsAsStrings);
-        proximity = stringListComparator.termProximity(0);
-    }
-
-    public int getProximity() {
-        return proximity;
+        proximity = stringListComparator.rowProximity(0);
     }
 }

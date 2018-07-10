@@ -1,8 +1,7 @@
 package beta.qlife.utility.comparing;
 
-public class StringComparator {
+class StringComparator extends Comparator{
     private String term, search;
-    private int proximity;
     private int partialDistances[][];
 
     StringComparator(String search, String term) {
@@ -46,9 +45,5 @@ public class StringComparator {
         } else {
             return val2 < val3 ? val2 : val3;
         }
-    }
-
-    public int getProximity() {
-        return proximity;
     }
 }
