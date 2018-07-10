@@ -1,5 +1,8 @@
 package beta.qlife.database.local.buildings;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import beta.qlife.database.local.DatabaseRow;
 
 /**
@@ -76,5 +79,16 @@ public class Building extends DatabaseRow {
 
     public double getLon() {
         return lon;
+    }
+
+    @Override
+    public ArrayList<String> publicFieldsAsStringList() {
+        ArrayList<String> fields = new ArrayList<>();
+        fields.add(name);
+        fields.add(purpose);
+        fields.add(boolFieldToString(bookRooms) + "book rooms");
+        fields.add(boolFieldToString(food) + "buy food");
+        fields.add(boolFieldToString(atm) + "use atm");
+        return fields;
     }
 }

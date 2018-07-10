@@ -1,5 +1,7 @@
 package beta.qlife.database.local.courses.OneClass;
 
+import java.util.ArrayList;
+
 import beta.qlife.database.local.DatabaseRow;
 
 /**
@@ -106,5 +108,10 @@ public class OneClass extends DatabaseRow {
 
     public String getYear() {
         return year;
+    }
+
+    @Override
+    public ArrayList<String> publicFieldsAsStringList() {
+        return new ArrayList<>();
     }
 }

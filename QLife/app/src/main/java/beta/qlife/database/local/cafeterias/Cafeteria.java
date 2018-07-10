@@ -1,5 +1,7 @@
 package beta.qlife.database.local.cafeterias;
 
+import java.util.ArrayList;
+
 import beta.qlife.database.local.DatabaseRow;
 
 /**
@@ -210,5 +212,12 @@ public class Cafeteria extends DatabaseRow {
 
     public double getSunDinnerStop() {
         return sunDinnerStop;
+    }
+
+    @Override
+    public ArrayList<String> publicFieldsAsStringList() {
+        ArrayList<String> fields = new ArrayList<>();
+        fields.add(name);
+        return fields;
     }
 }

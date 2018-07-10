@@ -1,4 +1,6 @@
 package beta.qlife.database.local.rooms;
+import java.util.ArrayList;
+
 import beta.qlife.database.local.DatabaseRow;
 
 /**
@@ -57,6 +59,14 @@ public class Room extends DatabaseRow {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public ArrayList<String> publicFieldsAsStringList() {
+        ArrayList<String> fields = new ArrayList<>();
+        fields.add(name);
+        fields.add(description);
+        return fields;
     }
 }
 

@@ -1,5 +1,7 @@
 package beta.qlife.database.local.food;
 
+import java.util.ArrayList;
+
 import beta.qlife.database.local.DatabaseRow;
 
 /**
@@ -158,5 +160,15 @@ public class Food extends DatabaseRow {
 
     public double getSunStopHours() {
         return sunStopHours;
+    }
+
+    @Override
+    public ArrayList<String> publicFieldsAsStringList() {
+        ArrayList<String> fields = new ArrayList<>();
+        fields.add(name);
+        fields.add(information);
+        fields.add(boolFieldToString(mealPlan) + "use meal plan");
+        fields.add(boolFieldToString(card) + "use debit/credit ");
+        return fields;
     }
 }

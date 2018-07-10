@@ -4,6 +4,7 @@ package beta.qlife.ui.fragments;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import beta.qlife.interfaces.enforcers.ActionbarFragment;
 import beta.qlife.interfaces.enforcers.DrawerItem;
 import beta.qlife.interfaces.enforcers.ListFragment;
 import beta.qlife.utility.Util;
+import beta.qlife.utility.comparing.DbTableComparator;
 
 /**
  * Created by Carson on 12/06/2017.
@@ -69,6 +71,7 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
         if (activity != null) {
             ArrayList<HashMap<String, String>> engContactsList = new ArrayList<>();
             ArrayList<DatabaseRow> contacts = (new EngineeringContactsManager(activity.getApplicationContext())).getTable();
+            DbTableComparator comp = new DbTableComparator("conferences", contacts);
             for (DatabaseRow row : contacts) {
                 engContactsList.add(packEngContactsMap(row));
             }

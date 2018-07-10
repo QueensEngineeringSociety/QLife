@@ -1,5 +1,7 @@
 package beta.qlife.database.local.contacts.engineering;
 
+import java.util.ArrayList;
+
 import beta.qlife.database.local.DatabaseRow;
 
 /**
@@ -43,5 +45,14 @@ public class EngineeringContact extends DatabaseRow {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public ArrayList<String> publicFieldsAsStringList() {
+        ArrayList<String> fields = new ArrayList<>();
+        fields.add(name);
+        fields.add(position);
+        fields.add(description);
+        return fields;
     }
 }

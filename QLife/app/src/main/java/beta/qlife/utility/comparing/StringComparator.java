@@ -25,7 +25,7 @@ public class StringComparator {
     private void findProximity() {
         for (int i = 0; i < search.length(); ++i) {
             for (int j = 0; j < term.length(); ++j) {
-                int subCost = getSubCost(search.charAt(j), term.charAt(i));
+                int subCost = getSubCost(search.charAt(i), term.charAt(j));
                 partialDistances[j + 1][i + 1] = min(partialDistances[j][i + 1] + 1,
                         partialDistances[j + 1][i] + 1, partialDistances[j][i] + subCost);
             }

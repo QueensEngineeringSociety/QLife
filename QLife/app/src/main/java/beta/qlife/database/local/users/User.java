@@ -1,5 +1,7 @@
 package beta.qlife.database.local.users;
 
+import java.util.ArrayList;
+
 import beta.qlife.database.local.DatabaseRow;
 
 /**
@@ -57,5 +59,14 @@ public class User extends DatabaseRow {
 
     public String getIcsURL() {
         return icsURL;
+    }
+
+    @Override
+    public ArrayList<String> publicFieldsAsStringList() {
+        ArrayList<String> fields = new ArrayList<>();
+        fields.add(netid);
+        fields.add(firstName);
+        fields.add(lastName);
+        return fields;
     }
 }
