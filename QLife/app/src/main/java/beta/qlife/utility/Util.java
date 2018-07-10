@@ -22,6 +22,7 @@ import java.util.Calendar;
 
 import beta.qlife.R;
 import beta.qlife.activities.AboutActivity;
+import beta.qlife.activities.MainTabActivity;
 import beta.qlife.activities.ReviewActivity;
 import beta.qlife.activities.SettingsActivity;
 import beta.qlife.interfaces.observers.CallableObj;
@@ -86,6 +87,11 @@ public class Util {
                 actionbar.setTitle(title);
             }
         }
+    }
+
+    public static void setSearchVisible(MainTabActivity activity) {
+        if (activity != null)
+            activity.getOptionsMenu().findItem(R.id.action_search).setVisible(true);
     }
 
     public static void setDrawerItemSelected(Activity activity, int itemId, boolean isChecked) {

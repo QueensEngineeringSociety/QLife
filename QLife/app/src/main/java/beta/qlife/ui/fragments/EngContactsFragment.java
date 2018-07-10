@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import beta.qlife.R;
+import beta.qlife.activities.MainTabActivity;
 import beta.qlife.database.local.DatabaseRow;
 import beta.qlife.database.local.contacts.engineering.EngineeringContact;
 import beta.qlife.database.local.contacts.engineering.EngineeringContactsManager;
@@ -34,6 +35,7 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         setActionbarTitle();
+        setSearchVisible();
         inflateListView();
         return v;
     }
@@ -95,5 +97,9 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
         map.put(EngineeringContact.COLUMN_POSITION, contact.getPosition());
         map.put(EngineeringContact.COLUMN_DESCRIPTION, contact.getDescription());
         return map;
+    }
+
+    public void setSearchVisible() {
+        Util.setSearchVisible((MainTabActivity) getActivity());
     }
 }
