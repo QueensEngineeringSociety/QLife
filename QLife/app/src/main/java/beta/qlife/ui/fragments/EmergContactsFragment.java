@@ -10,7 +10,9 @@ import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 
 import beta.qlife.R;
+import beta.qlife.activities.MainTabActivity;
 import beta.qlife.interfaces.enforcers.ListFragment;
+import beta.qlife.interfaces.enforcers.SearchableFragment;
 import beta.qlife.utility.Util;
 import beta.qlife.database.local.DatabaseRow;
 import beta.qlife.database.local.contacts.emergency.EmergencyContact;
@@ -25,12 +27,13 @@ import java.util.HashMap;
  * Created by Carson on 12/06/2017.
  * Fragment that displays emergency contact information held in cloud database
  */
-public class EmergContactsFragment extends android.support.v4.app.ListFragment implements ActionbarFragment, DrawerItem, ListFragment {
+public class EmergContactsFragment extends android.support.v4.app.ListFragment implements ActionbarFragment, DrawerItem, ListFragment, SearchableFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         setActionbarTitle();
+        setSearchVisible(true);
         inflateListView();
         return v;
     }
@@ -45,6 +48,7 @@ public class EmergContactsFragment extends android.support.v4.app.ListFragment i
     public void onPause() {
         super.onPause();
         deselectDrawer();
+        setSearchVisible(false);
     }
 
     @Override
@@ -91,5 +95,10 @@ public class EmergContactsFragment extends android.support.v4.app.ListFragment i
         map.put(EmergencyContact.COLUMN_PHONE_NUMBER, contact.getPhoneNumber());
         map.put(EmergencyContact.COLUMN_DESCRIPTION, contact.getDescription());
         return map;
+    }
+
+    @Override
+    public void setSearchVisible(boolean isVisible) {
+        Util.setSearchVisible((MainTabActivity)getActivity(),isVisible);
     }
 }

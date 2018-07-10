@@ -22,6 +22,7 @@ import beta.qlife.database.local.contacts.engineering.EngineeringContactsManager
 import beta.qlife.interfaces.enforcers.ActionbarFragment;
 import beta.qlife.interfaces.enforcers.DrawerItem;
 import beta.qlife.interfaces.enforcers.ListFragment;
+import beta.qlife.interfaces.enforcers.SearchableFragment;
 import beta.qlife.utility.Util;
 import beta.qlife.utility.comparing.DbTableComparator;
 
@@ -29,13 +30,13 @@ import beta.qlife.utility.comparing.DbTableComparator;
  * Created by Carson on 12/06/2017.
  * Activity that displays engineering contact information held in cloud database
  */
-public class EngContactsFragment extends android.support.v4.app.ListFragment implements ActionbarFragment, DrawerItem, ListFragment {
+public class EngContactsFragment extends android.support.v4.app.ListFragment implements ActionbarFragment, DrawerItem, ListFragment, SearchableFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         setActionbarTitle();
-        setSearchVisible();
+        setSearchVisible(true);
         inflateListView();
         return v;
     }
@@ -50,6 +51,7 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
     public void onPause() {
         super.onPause();
         deselectDrawer();
+        setSearchVisible(false);
     }
 
     @Override
@@ -99,7 +101,8 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
         return map;
     }
 
-    public void setSearchVisible() {
-        Util.setSearchVisible((MainTabActivity) getActivity());
+    @Override
+    public void setSearchVisible(boolean isVisible) {
+        Util.setSearchVisible((MainTabActivity) getActivity(), isVisible);
     }
 }

@@ -89,9 +89,9 @@ public class Util {
         }
     }
 
-    public static void setSearchVisible(MainTabActivity activity) {
+    public static void setSearchVisible(MainTabActivity activity, boolean isVisible) {
         if (activity != null)
-            activity.getOptionsMenu().findItem(R.id.action_search).setVisible(true);
+            activity.getOptionsMenu().findItem(R.id.action_search).setVisible(isVisible);
     }
 
     public static void setDrawerItemSelected(Activity activity, int itemId, boolean isChecked) {

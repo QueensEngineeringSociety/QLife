@@ -15,6 +15,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import beta.qlife.R;
+import beta.qlife.activities.MainTabActivity;
+import beta.qlife.interfaces.enforcers.SearchableFragment;
 import beta.qlife.utility.Constants;
 import beta.qlife.utility.Util;
 import beta.qlife.database.local.DatabaseRow;
@@ -34,7 +36,7 @@ import java.util.HashMap;
  * Fragment that displays the buildings in the phone/cloud database. When a building is clicked, it starts
  * OneBuildingFragment that provides details about the building.
  */
-public class BuildingsFragment extends ListFragment implements ActionbarFragment, DrawerItem, ListFragmentWithChild {
+public class BuildingsFragment extends ListFragment implements ActionbarFragment, DrawerItem, ListFragmentWithChild, SearchableFragment {
 
     public static final String TAG_FOOD_NAMES = "FOOD_NAMES";
 
@@ -44,6 +46,7 @@ public class BuildingsFragment extends ListFragment implements ActionbarFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         setActionbarTitle();
+        setSearchVisible(true);
         inflateListView();
         return v;
     }
@@ -63,6 +66,7 @@ public class BuildingsFragment extends ListFragment implements ActionbarFragment
     public void onPause() {
         super.onPause();
         deselectDrawer();
+        setSearchVisible(false);
     }
 
     @Override
@@ -155,5 +159,10 @@ public class BuildingsFragment extends ListFragment implements ActionbarFragment
                     new int[]{R.id.name, R.id.purpose, R.id.food, R.id.db_id});
             setListAdapter(adapter);
         }
+    }
+
+    @Override
+    public void setSearchVisible(boolean isVisible) {
+        Util.setSearchVisible((MainTabActivity) getActivity(), isVisible);
     }
 }

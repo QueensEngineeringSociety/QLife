@@ -15,6 +15,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import beta.qlife.R;
+import beta.qlife.activities.MainTabActivity;
+import beta.qlife.interfaces.enforcers.SearchableFragment;
 import beta.qlife.utility.Util;
 import beta.qlife.database.local.DatabaseRow;
 import beta.qlife.database.local.buildings.Building;
@@ -33,7 +35,7 @@ import java.util.HashMap;
  * Fragment displaying data in phone database regarding food establishments. When a food place is clicked, it starts
  * OneFoodFragment that provides details about the food place.
  */
-public class FoodFragment extends ListFragment implements ActionbarFragment, DrawerItem, ListFragmentWithChild {
+public class FoodFragment extends ListFragment implements ActionbarFragment, DrawerItem, ListFragmentWithChild, SearchableFragment {
     public static final String TAG_DB_ID = "DB_ID";
     public static final String TAG_BUILDING_NAME = "BUILDING_NAME";
 
@@ -44,6 +46,7 @@ public class FoodFragment extends ListFragment implements ActionbarFragment, Dra
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         setActionbarTitle();
+        setSearchVisible(true);
 
         Activity activity = getActivity();
         if (activity != null) {
@@ -68,6 +71,7 @@ public class FoodFragment extends ListFragment implements ActionbarFragment, Dra
     public void onPause() {
         super.onPause();
         deselectDrawer();
+        setSearchVisible(false);
     }
 
     @Override
@@ -179,5 +183,10 @@ public class FoodFragment extends ListFragment implements ActionbarFragment, Dra
         map.put(Food.COLUMN_CARD, oneFood.isCard() ? "Yes" : "No");
         map.put(TAG_DB_ID, String.valueOf(oneFood.getId()));
         return map;
+    }
+
+    @Override
+    public void setSearchVisible(boolean isVisible) {
+        Util.setSearchVisible((MainTabActivity) getActivity(), isVisible);
     }
 }
