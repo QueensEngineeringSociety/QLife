@@ -41,6 +41,7 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
 
     private DrawerLayout mDrawer;
     private FragmentManager mFragManager;
+    private Menu optionsMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         inflateOptionsMenu(menu);
+        optionsMenu = menu;
         return true;
     }
 
@@ -167,6 +169,10 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
 
     public boolean isToActivity() {
         return mToActivity;
+    }
+
+    public Menu getOptionsMenu() {
+        return optionsMenu;
     }
 
     @Override

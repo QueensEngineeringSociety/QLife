@@ -9,6 +9,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.Calendar;
 
 import beta.qlife.R;
 import beta.qlife.activities.AboutActivity;
+import beta.qlife.activities.MainTabActivity;
 import beta.qlife.activities.ReviewActivity;
 import beta.qlife.activities.SettingsActivity;
 import beta.qlife.interfaces.observers.CallableObj;
@@ -86,6 +88,16 @@ public class Util {
                 actionbar.setTitle(title);
             }
         }
+    }
+
+    public static void setSearchVisible(MainTabActivity activity, boolean isVisible) {
+        if (activity != null)
+            activity.getOptionsMenu().findItem(R.id.action_search).setVisible(isVisible);
+    }
+
+    public static void closeSearchView(SearchView searchView){
+        searchView.setQuery("", false);
+        searchView.setIconified(true);
     }
 
     public static void setDrawerItemSelected(Activity activity, int itemId, boolean isChecked) {

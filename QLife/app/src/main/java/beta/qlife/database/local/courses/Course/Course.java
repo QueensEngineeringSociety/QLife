@@ -1,5 +1,7 @@
 package beta.qlife.database.local.courses.Course;
 
+import java.util.ArrayList;
+
 import beta.qlife.database.local.DatabaseRow;
 
 /**
@@ -68,5 +70,13 @@ public class Course extends DatabaseRow {
 
     public void setSetName(boolean setName) {
         this.setName = setName;
+    }
+
+    @Override
+    public ArrayList<String> publicFieldsAsStringList() {
+        ArrayList<String> fields = new ArrayList<>();
+        fields.add(name);
+        fields.add(code);
+        return fields;
     }
 }

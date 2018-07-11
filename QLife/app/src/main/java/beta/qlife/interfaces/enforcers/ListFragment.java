@@ -8,7 +8,8 @@ public interface ListFragment {
 
     /**
      * Method that handles iterating through a table and setting the ListView data.
-     * Should be called from onCreateView() after the view is inflated.
+     * Should be called from onCreateView() after the view is inflated. Searchable Fragments
+     * should call it in onResume() as well.
      */
     void inflateListView();
 }
