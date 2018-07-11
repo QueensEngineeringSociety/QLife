@@ -133,6 +133,13 @@ public class FoodFragment extends ListFragment implements ActionbarFragment, Dra
                         return false;
                     }
                 });
+                searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                    @Override
+                    public boolean onClose() {
+                        inflateListView();
+                        return false;
+                    }
+                });
             }
         }
     }

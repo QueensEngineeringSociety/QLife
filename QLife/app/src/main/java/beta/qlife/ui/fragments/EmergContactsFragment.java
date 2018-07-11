@@ -113,6 +113,13 @@ public class EmergContactsFragment extends android.support.v4.app.ListFragment i
                         return false;
                     }
                 });
+                searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                    @Override
+                    public boolean onClose() {
+                        inflateListView();
+                        return false;
+                    }
+                });
             }
         }
     }

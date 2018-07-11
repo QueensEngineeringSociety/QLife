@@ -178,6 +178,13 @@ public class BuildingsFragment extends ListFragment implements ActionbarFragment
                         return false;
                     }
                 });
+                searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                    @Override
+                    public boolean onClose() {
+                        inflateListView();
+                        return false;
+                    }
+                });
             }
         }
     }
