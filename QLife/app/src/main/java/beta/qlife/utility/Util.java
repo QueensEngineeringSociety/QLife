@@ -9,6 +9,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -92,6 +93,11 @@ public class Util {
     public static void setSearchVisible(MainTabActivity activity, boolean isVisible) {
         if (activity != null)
             activity.getOptionsMenu().findItem(R.id.action_search).setVisible(isVisible);
+    }
+
+    public static void closeSearchView(SearchView searchView){
+        searchView.setQuery("", false);
+        searchView.setIconified(true);
     }
 
     public static void setDrawerItemSelected(Activity activity, int itemId, boolean isChecked) {

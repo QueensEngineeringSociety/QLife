@@ -1,11 +1,10 @@
 package beta.qlife.ui.fragments;
 
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,22 +34,31 @@ import beta.qlife.utility.comparing.DbTableComparator;
  */
 public class EngContactsFragment extends android.support.v4.app.ListFragment implements ActionbarFragment, DrawerItem, ListFragment, SearchableFragment {
 
-    private ArrayList<DatabaseRow> contacts;
+    private ArrayList<DatabaseRow> rawContacts = new ArrayList<>();
+    private Activity activity;
+    private SearchView searchView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
+        activity = getActivity();
         setActionbarTitle();
-        setSearchVisible(true);
         setSearchFunction();
-        inflateListView();
+        initListView();
         return v;
+    }
+
+    private void initListView() {
+        rawContacts = (new EngineeringContactsManager(activity)).getTable();
+        inflateListView();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         selectDrawer();
+        setSearchVisible(true);
+        inflateListView();
     }
 
     @Override
@@ -59,11 +66,12 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
         super.onPause();
         deselectDrawer();
         setSearchVisible(false);
+        closeSearchView(searchView);
     }
 
     @Override
     public void setActionbarTitle() {
-        Util.setActionbarTitle(getString(R.string.fragment_eng_contacts), (AppCompatActivity) getActivity());
+        Util.setActionbarTitle(getString(R.string.fragment_eng_contacts), (AppCompatActivity) activity);
     }
 
     @Override
@@ -78,18 +86,8 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
 
     @Override
     public void inflateListView() {
-        FragmentActivity activity = getActivity();
         if (activity != null) {
-            ArrayList<HashMap<String, String>> engContactsList = new ArrayList<>();
-            ArrayList<DatabaseRow> contacts = (new EngineeringContactsManager(activity.getApplicationContext())).getTable();
-            this.contacts = contacts;
-            for (DatabaseRow row : contacts) {
-                engContactsList.add(packEngContactsMap(row));
-            }
-            ListAdapter adapter = new SimpleAdapter(activity.getApplicationContext(), engContactsList,
-                    R.layout.eng_contacts_list_item, new String[]{EngineeringContact.COLUMN_NAME, EngineeringContact.COLUMN_EMAIL,
-                    EngineeringContact.COLUMN_POSITION, EngineeringContact.COLUMN_DESCRIPTION}, new int[]{R.id.name, R.id.email, R.id.position, R.id.description});
-            setListAdapter(adapter);
+            setListAdapter(rawContacts);
         }
     }
 
@@ -111,36 +109,22 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
 
     @Override
     public void setSearchVisible(boolean isVisible) {
-        Util.setSearchVisible((MainTabActivity) getActivity(), isVisible);
+        Util.setSearchVisible((MainTabActivity) activity, isVisible);
     }
 
-    private void setSearchFunction() {
-        MainTabActivity myActivity = (MainTabActivity) getActivity();
+    @Override
+    public void setSearchFunction() {
+        MainTabActivity myActivity = (MainTabActivity) activity;
         if (myActivity != null) {
             Menu menu = myActivity.getOptionsMenu();
             if (menu != null) {
                 final MenuItem searchItem = menu.findItem(R.id.action_search);
-                final SearchView searchView = (SearchView) searchItem.getActionView();
+                searchView = (SearchView) searchItem.getActionView();
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        DbTableComparator comp = new DbTableComparator(query, contacts);
-                        contacts=comp.tableByProximity();
-                        FragmentActivity activity = getActivity();
-                        if (activity != null) {
-                            ArrayList<HashMap<String, String>> engContactsList = new ArrayList<>();
-                            for (DatabaseRow row : contacts) {
-                                engContactsList.add(packEngContactsMap(row));
-                            }
-                            ListAdapter adapter = new SimpleAdapter(activity.getApplicationContext(), engContactsList,
-                                    R.layout.eng_contacts_list_item, new String[]{EngineeringContact.COLUMN_NAME, EngineeringContact.COLUMN_EMAIL,
-                                    EngineeringContact.COLUMN_POSITION, EngineeringContact.COLUMN_DESCRIPTION}, new int[]{R.id.name, R.id.email, R.id.position, R.id.description});
-                            setListAdapter(adapter);
-                        }
-                        if (!searchView.isIconified()) {
-                            searchView.setIconified(true);
-                        }
-                        searchItem.collapseActionView();
+                        DbTableComparator comp = new DbTableComparator(query, rawContacts);
+                        setListAdapter(comp.tableByProximity());
                         return false;
                     }
 
@@ -150,6 +134,24 @@ public class EngContactsFragment extends android.support.v4.app.ListFragment imp
                     }
                 });
             }
+        }
+    }
+
+    @Override
+    public void closeSearchView(SearchView searchView) {
+        Util.closeSearchView(searchView);
+    }
+
+    private void setListAdapter(ArrayList<DatabaseRow> listContent) {
+        if (activity != null) {
+            ArrayList<HashMap<String, String>> engContactsList = new ArrayList<>();
+            for (DatabaseRow row : listContent) {
+                engContactsList.add(packEngContactsMap(row));
+            }
+            ListAdapter adapter = new SimpleAdapter(activity.getApplicationContext(), engContactsList,
+                    R.layout.eng_contacts_list_item, new String[]{EngineeringContact.COLUMN_NAME, EngineeringContact.COLUMN_EMAIL,
+                    EngineeringContact.COLUMN_POSITION, EngineeringContact.COLUMN_DESCRIPTION}, new int[]{R.id.name, R.id.email, R.id.position, R.id.description});
+            setListAdapter(adapter);
         }
     }
 }
